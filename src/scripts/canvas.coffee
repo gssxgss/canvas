@@ -6,40 +6,53 @@ requestAnimationFrame = ->
            setTimeout(callback, 1000 / 60)
 
 canvas = document.createElement 'canvas'
+input = document.querySelector('#width')
 
 c = canvas.getContext '2d'
-r = 5
-pie = Math.PI
-pie2 = pie * 2
-isMousedown = false
+w = input.value
+isDrawing = false
+points = {
+  'array': [],
+  'size': 0
+}
 
-canvas.height = window.innerHeight - 50
-canvas.width = window.innerWidth - 50
+canvas.height = window.innerHeight - 100
+canvas.width = window.innerWidth - 100
 
 canvasPosition = canvas.getBoundingClientRect()
 
 document.body.appendChild canvas
 
-canvas.addEventListener 'mousemove', (e) ->
-  c.clearRect(0, 0, canvas.width, canvas.height)
-  drawPoint(e)
-  if isMousedown
-    c.restore()
-
 canvas.addEventListener 'mousedown', (e) ->
-  isMousedown = true
-  drawPoint(e)
-  c.save()
+  points['array'].push({
+    'x': e.offsetX - canvasPosition.left,
+    'y': e.offsetY - canvasPosition.top
+  });
+  points['size'] = points['array'].length
+  isDrawing = true
 
-canvas.addEventListener 'mouseup', (e) ->
-  isMousedown = false
-  drawPoint(e)
+canvas.addEventListener 'mousemove', (e) ->
+  if isDrawing
+    points['array'][points['size']] = {
+      'x': e.offsetX - canvasPosition.left,
+      'y': e.offsetY - canvasPosition.top,
+      'w': input.value
+    };
+    drawPath(points)
 
-drawPoint = (e) ->
-  # requestAnimationFrame(drawPoint)
-  x = e.offsetX - canvasPosition.left
-  y = e.offsetY - canvasPosition.top
-  c.beginPath()
-  c.arc(x, y, r, 0, pie2)
-  c.fillStyle = '#ffffff'
-  c.fill()
+canvas.addEventListener 'mouseup', () ->
+  isDrawing = false
+
+
+drawPath = (points) ->
+  c.clearRect(0, 0, canvas.width, canvas.height)
+  points['array'].forEach (value, index) ->
+    console.log(value)
+    if index % 2 == 0
+      c.beginPath()
+      c.moveTo(value.x, value.y)
+    else
+      c.lineTo(value.x, value.y)
+      c.lineWidth = value.w
+      c.strokeStyle = '#ffffff'
+      c.stroke()
