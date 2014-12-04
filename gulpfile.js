@@ -1,5 +1,5 @@
 var gulp            = require('gulp'),
-    // this is an arbitrary object that loads all gulp plugins in package.json. 
+    // this is an arbitrary object that loads all gulp plugins in package.json.
     $         = require("gulp-load-plugins")(),
     express   = require('express'),
     path      = require('path'),
@@ -19,7 +19,7 @@ gulp.task('compass', function() {
 });
 
 gulp.task('coffee', function() {
-  return gulp.src('src/scripts/main.coffee', { read: false })
+  return gulp.src('src/scripts/*.coffee', { read: false })
     .pipe($.plumber())
     .pipe($.browserify({
       debug: true,
@@ -27,7 +27,9 @@ gulp.task('coffee', function() {
       transform: ['coffeeify'],
       extensions: ['.coffee']
     }))
-    .pipe( $.rename('app.js') )
+    .pipe( $.rename(function(path) {
+      path.extname = '.js';
+    }) )
     .pipe( gulp.dest('dist/scripts') )
     .pipe( $.livereload( server ) );
 });
@@ -64,7 +66,7 @@ gulp.task('watch', function () {
     gulp.watch('src/scripts/*.coffee',['coffee']);
 
     gulp.watch('src/*.jade',['templates']);
-    
+
   });
 });
 

@@ -1,0 +1,30 @@
+html, body, canvas, menu, input, span {
+  margin: 0;
+  padding: 0;}
+
+body{
+  background: #666;}
+
+canvas {
+  margin: 50px;
+  display: block;
+  background: #333;
+  cursor: crosshair;}
+
+menu {
+  position: absolute;
+  bottom: 15px;
+  right: 50px;
+  color: #fff;}
+
+input {
+  height: 20px;
+  width: 40px;
+  border-radius: 3px;
+  border: none;
+  text-align: center;
+  font-size: 16px;}
+
+span {
+  margin: 0 0 0 10px;
+  font-family: sans-serif;}

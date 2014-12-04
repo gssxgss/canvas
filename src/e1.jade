@@ -6,12 +6,9 @@ html.no-js
     title canvas
     meta(name='description', content='canvas')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', href='stylesheets/main.css')
+    link(rel='stylesheet', href='stylesheets/e1.css')
   body
-    div.index
-      h1.title index
-      ul.list
-        li
-          a.link(href="e1.html") draw line with canvas
-        li
-          a.link(href="e2.html") draw smooth line
+    menu
+      input#width(type='text', value="1")
+      span px
+    script(src='scripts/e1.js')
