@@ -3,6 +3,15 @@
   padding: 0;
 }
 
+::-moz-selection {
+  color: #fff;
+  background: #333;
+}
+::selection {
+  color: #fff;
+  background: #333;
+}
+
 html {
   height: 100%;
 }
@@ -11,6 +20,7 @@ body {
   background: black;
   height: 100%;
   font: 16px/2 serif;
+  overflow: hidden;
 }
 
 .title {
@@ -21,12 +31,14 @@ body {
 }
 
 .index {
+  box-sizing: border-box;
   margin: 0 auto;
-  width: 400px;
+  width: 500px;
   height: 100%;
   padding: 40px;
   background: white;
   font: 2rem/2 serif;
+  overflow: auto;
 }
 
 .list {
@@ -36,7 +48,14 @@ body {
   border-width: 2px 0;
 }
 
+.item::first-letter {
+  text-transform: uppercase;
+}
+
 .link {
   color: black;
   text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
