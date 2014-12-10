@@ -6,8 +6,8 @@ w = canvas.width = window.innerWidth
 
 c.lineJoin = c.lineCap = 'round'
 c.shadowBlur = 1
-c.shadowColor = 'rgba(255, 255, 255, 0.5)'
-c.strokeStyle = 'rgb(255, 255, 255)'
+c.shadowColor = 'rgba(255, 255, 255, 0.1)'
+c.strokeStyle = 'rgba(255, 255, 255, 0.5)'
 
 isDrawing = false
 
