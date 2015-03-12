@@ -195,7 +195,7 @@ document.body.addEventListener "click", () ->
     isPlaying = true
 
 audio.addEventListener "canplay", ->
-  rainDrops.showHint()
+  rainDrops.showHint() if !isPlaying
 
 nav.addEventListener "click", (e) ->
   e.stopPropagation()
