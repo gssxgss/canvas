@@ -1,0 +1,89 @@
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  position: relative;
+  z-index: 100;
+  margin-top: -1em;
+  font: bold italic 5rem/1 "Times New Roman", serif;
+  color: white;
+  pointer-events: none;
+}
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+.theme {
+  float: left;
+  width: 25%;
+  font: 2rem/2 "Times New Roman", serif;
+  text-align: center;
+  background: white;
+  input {
+    display: none;
+  }
+  label {
+    display: block;
+  }
+  $s1: #87D69B;
+  $s2: #29CDFF;
+  $s3: #E6AC27;
+  $s4: #8BA6AC;
+  input + .spring {
+    color: $s1;
+  }
+  input:checked + .spring {
+    background: $s1;
+    color: #fff;
+  }
+  input + .summer {
+    color: $s2;
+  }
+  input:checked + .summer {
+    background: $s2;
+    color: #fff;
+  }
+  input + .autumn {
+    color: $s3;
+  }
+  input:checked + .autumn {
+    background: $s3;
+    color: #fff;
+  }
+  input + .winter {
+    color: $s4;
+  }
+  input:checked + .winter {
+    background: $s4;
+    color: #fff;
+  }
+}
+
+#audio {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+#canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}

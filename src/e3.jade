@@ -1,0 +1,27 @@
+doctype
+html.no-js
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    title canvas
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='stylesheets/e3.css')
+  body
+    nav#nav.nav
+      div.theme
+        input#spring(type="radio", name="season", checked)
+        label.spring(for="spring") spring
+      div.theme
+        input#summer(type="radio", name="season")
+        label.summer(for="summer") summer
+      div.theme
+        input#autumn(type="radio", name="season")
+        label.autumn(for="autumn") autumn
+      div.theme
+        input#winter(type="radio", name="season")
+        label.winter(for="winter") winter
+    canvas#canvas
+    header.header It's gonna rain!
+    audio#audio
+      source(src="audio/rain.mp3", type="audio/mpeg")
+    script(src="scripts/e3.js")
