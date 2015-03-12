@@ -8,6 +8,8 @@ window.cancelAnimationFrame = window.cancelAnimationFrame ||
 
 PI2 = 2 * Math.PI
 canvas = document.querySelector("#canvas")
+audio = document.querySelector('#audio')
+nav = document.querySelector('#nav')
 ctx = canvas.getContext("2d")
 isPlaying = false
 theme = null
@@ -23,10 +25,18 @@ window.addEventListener "resize", setSize
 
 class Drops
   constructor: ->
-    @audio = document.querySelector('#audio')
+    @audio = audio
+    @source = document.querySelector("#source")
+    @hint = document.querySelector("#hint")
     @duration = @audio.duration
 
     @points = []
+    @tracks =
+      "spring": "audio/rain-spring.mp3"
+      "summer": "audio/rain-summer.mp3"
+      "autumn": "audio/rain-autumn.mp3"
+      "winter": "audio/rain-winter.mp3"
+
     @theme =
       "vivid": [
         [84,146,219]
@@ -72,6 +82,7 @@ class Drops
       ]
 
     @colors = @theme["spring"]
+    @sound = @tracks["spring"]
     @bar =
       x: 0
       y: canvas.height / 2
@@ -117,6 +128,7 @@ class Drops
     v = 0
     @audio.volume = v
     @audio.play()
+    @hideHint()
     interval = window.setInterval () ->
       v += 1
       @audio.volume = v / 10
@@ -126,6 +138,7 @@ class Drops
 
   pause: =>
     v = 10
+    isPlaying = false
     interval = window.setInterval () ->
       v-=1
       if v == 0
@@ -134,10 +147,23 @@ class Drops
         window.cancelAnimationFrame(@call)
       else
         @audio.volume = v / 10
-    ,100
+    , 100
+    @showHint()
+
+  switch: (theme) =>
+    @audio.pause()
+    @colors = @theme[theme]
+    @sound = @tracks[theme]
+    @source.src = @sound
+    @audio.load()
+    @audio.currentTime = 0
+    @audio.play() if isPlaying
+
 
   updateState: =>
     w = ~~(@audio.currentTime / @audio.duration * canvas.width)
+    ctx.fillStyle = "rgba(255, 255, 255, 0.5)"
+    ctx.fillRect(@bar.x, @bar.y, canvas.width, @bar.h)
     ctx.fillStyle = @bar.c
     ctx.fillRect(@bar.x, @bar.y, w, @bar.h)
 
@@ -146,25 +172,34 @@ class Drops
     ctx.globalCompositeOperation = "overlay"
     @generatePoints() if isPlaying
     @drawDrops()
+    ctx.globalCompositeOperation = "source-over"
     @updateState()
     if @points.length == 0
       @stop()
     @call = window.requestAnimationFrame(@render)
+
+  showHint: =>
+    @hint.classList.add("show")
+
+  hideHint: =>
+    @hint.classList.remove("show")
 
 rainDrops = new Drops
 
 document.body.addEventListener "click", () ->
   if isPlaying
     rainDrops.pause()
-    isPlaying = false
   else
     rainDrops.render()
     rainDrops.play()
     isPlaying = true
 
-nav = document.querySelector('#nav')
+audio.addEventListener "canplay", ->
+  rainDrops.showHint()
+
 nav.addEventListener "click", (e) ->
   e.stopPropagation()
   if !!e.target.getAttribute('for')
     theme = e.target.getAttribute('for')
-  rainDrops.colors = rainDrops.theme[theme]
+  rainDrops.switch(theme)
+  

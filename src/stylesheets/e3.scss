@@ -87,3 +87,22 @@ body {
   top: 0;
   left: 0;
 }
+
+.hint {
+  position: fixed;
+  z-index: 200;
+  bottom: 10px;
+  right: 10px;
+  opacity: 0;
+  background: gray;
+  border-radius: 10px;
+  transition: opacity 1s;
+  fill: white;
+  &.show {
+    opacity: 0.5;
+  }
+}
+#icon {
+  width: 100px;
+  height: 100px;
+}

@@ -7,6 +7,12 @@ html.no-js
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='stylesheets/e3.css')
   body
+    svg(width="0", height="0")
+      symbol(id="icon-play", viewBox="0 0 1024 1024")
+        path(class="path1", d="M192 128l640 384-640 384z")
+    div#hint.hint
+      svg#icon
+        use(xlink:href="#icon-play")
     nav#nav.nav
       div.theme
         input#spring(type="radio", name="season", checked)
@@ -20,8 +26,9 @@ html.no-js
       div.theme
         input#winter(type="radio", name="season")
         label.winter(for="winter") winter
+
     canvas#canvas
     header.header It's gonna rain!
-    audio#audio
-      source(src="audio/rain.mp3", type="audio/mpeg")
+    audio#audio(loop)
+      source#source(src="audio/rain-spring.mp3", type="audio/mpeg")
     script(src="scripts/e3.js")
