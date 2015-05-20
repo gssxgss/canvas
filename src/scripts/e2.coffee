@@ -1,31 +1,29 @@
 canvas = document.querySelector('#canvas')
 c = canvas.getContext('2d')
 
-h = canvas.height = window.innerHeight
-w = canvas.width = window.innerWidth
+H = canvas.height = window.innerHeight
+W = canvas.width = window.innerWidth
 
 c.lineJoin = c.lineCap = 'round'
-c.shadowBlur = 1
-c.shadowColor = 'rgba(255, 255, 255, 0.1)'
-c.strokeStyle = 'rgba(255, 255, 255, 0.5)'
+c.shadowBlur = 6
+c.shadowColor = 'rgba(255, 255, 255, 0.8)'
+c.strokeStyle = '#fff'
 
 isDrawing = false
 
-color =
-  r: 255
-  g: 255
-  b: 255
-
 lineBase = 10
+lw = lineBase
+
 points = []
 
 endDrawing = () ->
+  lw = lineBase
   isDrawing = false
   points = []
 
 clearCanvas = () ->
+  c.clearRect(0, 0, W, H)
   endDrawing()
-  c.clearRect(0, 0, w, h)
 
 canvas.addEventListener 'contextmenu', ((e) ->
   e.preventDefault()
@@ -58,7 +56,7 @@ drawLine = () ->
   length = points.length + 1
   i = 1
 
-  c.clearRect(0, 0, w, h)
+  c.clearRect(0, 0, W, H)
 
   while i < length
 
@@ -79,10 +77,12 @@ drawLine = () ->
       c.moveTo(mid1.x, mid1.y)
       c.quadraticCurveTo(p1.x, p1.y, mid2.x, mid2.y)
 
-    c.lineWidth = w
-    console.log(w)
+      c.lineWidth = w
+
     c.stroke()
     c.closePath()
+    console.log w if i is 1
+    console.log w if i is length - 1
 
     i++
 
@@ -91,20 +91,19 @@ calcDotDistance = (p1, p2) ->
 
 calcLineWidth = (p1, p2) ->
   d = calcDotDistance(p1, p2)
-  l = Math.round(lineBase - d / 10)
-  if l <= 1
-    l = 1
-  return l
+  if d > 20
+    lw -= 1
+  else
+    lw += 1
+
+  if lw <= 1
+    lw = 1
+  else if lw >= 10
+    lw = 10
+  return lw
 
 calcMidPoint = (p1, p2) ->
   return {
     x: (p1.x + p2.x) / 2
     y: (p1.y + p2.y) / 2
   }
-
-###
-generatePatchPoint = (p1, p2) ->
-  d = calcDotDistance
-  if d > 1
-  while
-###
