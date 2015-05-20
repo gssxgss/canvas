@@ -6,8 +6,8 @@ window.cancelAnimationFrame = window.cancelAnimationFrame ||
                               window.webkitCancelAnimationFrame ||
                               window.mozCancelAnimationFrame
 
-vw = window.innerWidth
-vh = window.innerHeight
+vw = window.innerWidth / 2
+vh = window.innerHeight / 2
 canvas = document.querySelector('#canvas')
 ctx = canvas.getContext('2d')
 
@@ -25,7 +25,7 @@ class Wave
     @waves = []
     @w = vw
     @h = vh
-    @d = 30
+    @d = 20
     @n = 0
 
   new: (center) ->
